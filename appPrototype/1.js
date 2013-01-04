@@ -1,112 +1,55 @@
-    YUI({
-        filter: 'raw',
-        combine: false
-    }).use('zeView', 'datatable', 'event-custom', function(Y) {
+YUI().use('zeView', 'datatable', 'contentSwapper', 'autocomplete', 'autocomplete-highlighters', function(Y) {
 
-        var NewView = Y.Base.create('newView',Y.ZeView, [Y.ContentSwapper], {
-            template: "<button id='btn1' type='button'>Click Me NewView!</button><div class='innerContainer'></div>",
-            events: {
-                button: {
-                    click: function () {
-                        this.fire('swap', {which: 'AnotherNewView'});
-                    }
-                },
-                '#btn1': {
-                    click: function(ev) {
-                        console.log(ev);
-                    }
-                }
-            },
-            //                     {
-            //                '#btn1': {click: '_clickMe'}
-            //            },
-            // _clickMe: function(ev){
-            //     //this.fire('changetoanother')
-            //     // myView.set('view', new AnotherNewView());
-            //     console.log(ev);
-            // },
-            // initializer: function() {
-            // },
-            _render:  function (container) {
+    var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
+        template: '<p border="1">This is the fixed div container, next comes the variable part:</p><div class="variableContent"></div>',
+        initializer: function () {
+            this._eventHandles.push(
+                this.on('*:swap', this.swap)
+            );
+        },
+        swap: function (ev) {
+            switch (ev.which) {
+            case 'NewView':
+                Y.use("newView",function(){
+                          myView.setSwapView(new Y.NewView(),1);       
+                      });
+                break;
+            case 'AnotherNewView':
+                Y.use("anotherNewView",function(){
+                          myView.setSwapView(new Y.AnotherNewView(),1);       
+                      });
+                break;
+            }
+        },
+        _render: function (container) {
             container.setHTML(this.template);
-            this.setSwapContainer(container.one('.innerContainer'));
+            this.setSwapContainer(container.one('.variableContent'),1);
+        }
+    });
 
-            var table = new Y.DataTable({
-                columns: ['id', 'name','price','cost'],
-                data: [
-                { id: "ga-3475", name: "gadget",   price: "$6.99", cost: "$5.99" },
-                { id: "sp-9980", name: "sprocket", price: "$3.75", cost: "$3.25" },
-                { id: "wi-0650", name: "widget",   price: "$4.25", cost: "$3.75" }
-                ]
-                });
-                this.setSwapView(table);
-                this._destroyOnExit.push(table);
-               //  table.render(container);
-            }
-        });
+    var myView = new MyView();
+    myView.render(Y.one('#mainContent'));
+    Y.use("newView",function(){
+              myView.setSwapView(new Y.NewView(),1);       
+          });
 
-        var AnotherNewView = Y.Base.create('anothernewView',Y.ZeView, [], {
-            template: "<button id='btn2' type='button'>Click Me AnotherNewView!</button>",
-            events: {
-                button: {
-                    click: function () {
-                        this.fire('swap', {which: 'NewView'});
-                    }
-                },
-                '#btn2': {
-                    click: function () {
-                        this.fire('swap', {which: 'NewView'});
-                    }
-                }
-            },
-            _clickMe2: function(ev){
-                console.log("asd");
-            },
-            _render:  function (container) {
-                container.setHTML(this.template);
-            }
-        });
-
-        var MyView = Y.Base.create('myView', Y.ZeView, [Y.ContentSwapper], {
-            template: '<p><div class="variableContent"></div></p>',
-            initializer: function () {
-                         this._eventHandles.push(
-                             this.on('*:swap', this.swap)
-                         );
-                     },
-            swap: function (ev) {
-                         switch (ev.which) {
-                             case 'NewView':
-                                 this.setSwapView(new NewView());
-                                 break;
-                             case 'AnotherNewView':
-                                 this.setSwapView(new AnotherNewView());
-                                 break;
-                         }
-                     },
-            _render: function (container) {
-                         container.setHTML(this.template);
-                         this.setSwapContainer(container.one('.variableContent'));
-                     }
-        });
-
-        var myView = new MyView();
-        myView.render(Y.one('#mainContent'));
-
-        Y.all(".tabsa").on("click", function(e) {
-              console.log(e);
-              e.preventDefault();
-              if (e.currentTarget._node.id === 'tab1') {
-                  myView.setSwapView(new AnotherNewView());
-                  // myView.attachEvents();
-              }
-              else if (e.currentTarget._node.id === 'tab2') {
-                  myView.setSwapView(new AnotherNewView());
-                  // myView.attachEvents();
-              }
-              else {
-                  var nv = new NewView();
-                  myView.setSwapView(nv);
-                  // nv.attachEvents();
-        }});
+    Y.all(".tabsa").on("click", function(e) {
+        console.log(e);
+        e.preventDefault();
+        if (e.currentTarget._node.id === 'tab1') {
+            Y.use("clearView",function(){
+                      myView.setSwapView(new Y.ClearView(),1);       
+                  });
+           }
+        else if (e.currentTarget._node.id === 'tab2') {
+            Y.use("anotherNewView",function(){
+                      myView.setSwapView(new Y.AnotherNewView(),1);       
+                  });
+        }
+        else { 
+            Y.use("newView",function(){
+                      myView.setSwapView(new Y.NewView(),1);       
+                  });
+        }
+    });
 });

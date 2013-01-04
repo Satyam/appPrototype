@@ -1,0 +1,20 @@
+{
+    "name": "clearView",
+    "builds": {
+        "clearView": {
+            "jsfiles": [
+                "clearView.js"
+            ]
+        },
+	"anotherNewView": {
+            "jsfiles": [
+                "anotherNewView.js"
+            ]
+        },
+	"newView": {
+            "jsfiles": [
+                "newView.js"
+            ]
+        }
+    }
+}

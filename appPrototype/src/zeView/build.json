@@ -2,10 +2,7 @@
     "name": "zeView",
     "builds": {
         "zeView": {
-            "jsfiles": [
-                "cs.js",
-                "zeView.js"
-            ]
+            "jsfiles": ["zeView.js"]
         }
-    }
+}
 }

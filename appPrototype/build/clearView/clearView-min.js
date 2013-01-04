@@ -1,0 +1,1 @@
+YUI.add("clearView",function(e,t){var n=e.Base.create("clearView",e.ZeView,[],{template:"<p><b>CLEARED ALL THE DOM OBJECTS AND EVENTS :)</p>",_render:function(e){e.setHTML(this.template)}});e.ClearView=n},"@VERSION@",{requires:["zeView","datatable","contentSwapper","autocomplete","autocomplete-highlighters"]});

@@ -1,7 +1,7 @@
 /*global YUI_config:true */
 YUI_config = {
-	//filter:'raw',
-	//combine:false,
+	// filter:'raw',
+	// combine:false,
         base: 'yui/',
 	groups: {
 		js: {
@@ -9,32 +9,24 @@ YUI_config = {
 			modules: {
 				'zeView': {
 					path: '/zeView/zeView.js',
-					requires: ['view']
-				}// ,
-				// 'pieModel': {
-				// 	path: '/pieModel.js',
-				// 	requires: ['model', 'model-sync-rest']
-				// },
-				// 'pieEditor': {
-				// 	path: '/pieEditor.js',
-				// 	requires: ['myView', 'pieModel']
-				// },
-				// 'pieDTView': {
-				// 	path: '/pieDTView.js',
-				// 	requires: ['datatable', 'pieModel']
-				// },
-				// 'pieView': {
-				// 	path: '/pieView.js',
-				// 	requires: ['myView', 'pieModel']
-				// },
-				// 'pieList': {
-				// 	path: '/pieList.js',
-				// 	requires: ['model-list', 'pieModel', 'model-sync-rest']
-				// },
-				// 'pieListView': {
-				// 	path: '/pieListView.js',
-				// 	requires: ['myView', 'pieList']
-				// }
+					requires: ["view", "contentSwapper", "calendar", "base-build", "datatype-date", "event-outside", "event-focus"]
+				},
+				'contentSwapper': {
+					path: '/contentSwapper/contentSwapper.js',
+					requires: ["view", "calendar", "base-build", "datatype-date", "event-outside", "event-focus"]
+				},
+				'clearView': {
+					path: '/clearView/clearView.js',
+					requires: ["zeView"]
+				},
+				'anotherNewView': {
+					path: '/anotherNewView/anotherNewView.js',
+					requires: ["zeView"]
+				},
+				'newView': {
+					path: '/newView/newView.js',
+					requires: ["zeView"]
+				}
 			}
 		}
 	}
